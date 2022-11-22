@@ -27,7 +27,7 @@ async def process_cart(message: Message, state: FSMContext):
 
     if len(cart_data) == 0:
 
-        await message.answer('Savatchangizda hech narsa yoq.')
+            await message.answer('В твоей корзине ничего нет.')
 
     else:
 
@@ -53,7 +53,7 @@ async def process_cart(message: Message, state: FSMContext):
                     data['products'][idx] = [title, price, count_in_cart]
 
                 markup = product_markup(idx, count_in_cart)
-                text = f"<b>{title}</b>\n\n{body}\n\nNarxi: {price}so'm.\n Maxsulot 10 tadan kam buyurtma qilinmaydi"
+                text = f"<b>{title}</b>\n\n{body}\n\nЦена: {price}so'm.\n Товар можно заказать не менее 10 штук"
 
                 await message.answer_photo(photo=image,
                                            caption=text,
@@ -159,7 +159,7 @@ async def process_check_cart_back(message: Message, state: FSMContext):
 @dp.message_handler(IsUser(), text=all_right_message, state=CheckoutState.check_cart)
 async def process_check_cart_all_right(message: Message, state: FSMContext):
     await CheckoutState.next()
-    await message.answer("nomeringizni yuborish uchun pastdagi knopkani bosing",
+    await message.answer("Нажмите кнопки ниже, чтобы отправить свой номер",
                          reply_markup=keybord.locations_buttons.keyboardcontakt)
 
 
@@ -180,7 +180,7 @@ async def process_name(message: Message, state: FSMContext):
 
         await CheckoutState.next()
         await message.answer(f"{message.from_user.full_name}.\n"
-                             f"Korxona nomini kiriting ",reply_markup=ReplyKeyboardRemove())
+                             f"Введите название компании ",reply_markup=ReplyKeyboardRemove())
 
 
 @dp.message_handler(IsUser(), text=back_message, state=CheckoutState.address)
@@ -203,7 +203,7 @@ async def process_address(message: Message, state: FSMContext):
 
     await message.answer(
 
-        f"Locatsiyangizni pastigi tugmani bosip tashlang",
+        f"Нажмите кнопку внизу чтобы отправить ваша местоположение",
         reply_markup=locations_buttons.keyboard
     )
     await CheckoutState.q3.set()
@@ -231,7 +231,7 @@ async def location(message: Message,state:FSMContext):
     answer2 = data.get("address")
     cart_data = db.fetchall(
         'SELECT idx FROM cart WHERE cid=?', (message.chat.id,))
-    maxsulotlar={'maxsulot':[],'maxsulotning soni':[]}
+    maxsulotlar={'Ваш заказ':[],'количество продукта':[]}
 
     answer = ''
     total_price = 0
@@ -273,7 +273,7 @@ async def location(message: Message,state:FSMContext):
 
         db.query('DELETE FROM cart WHERE cid=?', (cid,))
 
-        await message.answer('Agar yangi zakaz qilmoqchi bolsangiz\n /start ni bosing',reply_markup=yangiz())
+        await message.answer('Если хотите заказать еще нажмите кнопку внизу',reply_markup=yangiz())
     await state.finish()
 
 # @dp.message_handler(IsUser(), text=confirm_message, state=CheckoutState.confirm)

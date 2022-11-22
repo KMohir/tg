@@ -2,7 +2,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 keyboard=ReplyKeyboardMarkup(
     keyboard=[[
-        KeyboardButton(text="Locatsiyani yubormoqchi bosangiz",
+        KeyboardButton(text="Нажмите чтобы отправить местоположение",
                        request_location=True
 
                        )

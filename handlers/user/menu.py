@@ -3,14 +3,14 @@ from aiogram.types import Message, CallbackQuery, ReplyKeyboardMarkup
 from loader import dp
 from filters import IsAdmin, IsUser
 
-catalog = '🍽Katalog'
+catalog = '🍽Каталог'
 
-cart = '🛒 Savat'
-delivery_status = '🚚 Buyurtma holati'
+cart = '🛒 Корзинка'
+delivery_status = '🚚 Статус заказа'
 
 settings = '⚙️Katalogni sozlash'
 orders = '🚚 Buyurtmalar'
-questions = '❓ Savollar'
+questions = '❓ Вопросы'
 
 @dp.message_handler(IsAdmin(), commands='start')
 async def admin_menu(message: Message):
